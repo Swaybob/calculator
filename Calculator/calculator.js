@@ -49,6 +49,10 @@ let equalTo = function () {
         ansShow.innerHTML = ''
         return
     }
+    if (prevOp.toString().endsWith('+') || prevOp.toString().endsWith('-') || prevOp.toString().endsWith('/') || prevOp.toString().endsWith('x') || prevOp.toString().endsWith('*')) {
+        ansShow.innerHTML = "Math Error"
+        return
+    }
     ansShow.innerHTML = eval(ansShow.innerHTML);
     history.unshift(prevOp);
 
@@ -61,6 +65,13 @@ clearBtn.addEventListener('click', () => {
     ansShow.innerHTML = ''
     decimal.addEventListener('click', addAndpreventDecimal)
 });
+
+clearBtn.addEventListener('dblclick', () => {
+    opQuery.innerHTML = ''
+    ansShow.innerHTML = ''
+    decimal.addEventListener('click', addAndpreventDecimal)
+    history = []
+})
 function backspaceText() {
     console.log(ansShow.innerHTML)
     ansShow.innerHTML = ansShow.innerHTML.substring(0, ansShow.innerHTML.length - 1)
@@ -69,11 +80,18 @@ backspace.addEventListener('click', backspaceText);
 
 prevOperations.addEventListener('click', showPrevOperation)
 function showPrevOperation() {
+    console.log(n)
+    if (history.length == 0) {
+        opQuery.innerHTML = ''
+        ansShow.innerHTML = ''
+        return
+    }
     if (n >= history.length - 1) {
         opQuery.innerHTML = history[history.length - 1]
         ansShow.innerHTML = eval(opQuery.innerHTML)
         return
     }
+
     opQuery.innerHTML = history[n]
     ansShow.innerHTML = eval(opQuery.innerHTML)
     n = n + 1;
@@ -81,6 +99,11 @@ function showPrevOperation() {
 
 nextOperation.addEventListener('click', showNextOperation)
 function showNextOperation() {
+    if (history.length == 0) {
+        opQuery.innerHTML = ''
+        ansShow.innerHTML = ''
+        return
+    }
     if (n <= 0) {
         opQuery.innerHTML = history[0]
         ansShow.innerHTML = eval(opQuery.innerHTML)
