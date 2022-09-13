@@ -75,12 +75,6 @@ button {
     color: white;
 }
 
-#equals {
-    grid-column-start: 3;
-    grid-column-end: 5;
-}
+#equals {}
 
-#clear {
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
+#clear {}
