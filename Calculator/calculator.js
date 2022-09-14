@@ -12,6 +12,13 @@ let prevOp;
 let n = 0;
 let history = []
 
+
+
+window.addEventListener('load', function () {
+    ansShow.innerHTML = ''
+    opQuery.innerHTML = ''
+})
+
 for (let int of integers) {
     int.addEventListener('click', showText)
     function showText() {
@@ -39,17 +46,18 @@ let addAndpreventDecimal = function () {
 decimal.addEventListener('click', addAndpreventDecimal)
 
 let equalTo = function () {
-    prevOp = opQuery.innerHTML = ansShow.innerHTML;
-    if (prevOp.toString().includes('/0')) {
-        ansShow.innerHTML = "Can't Divide by 0";
-        return
-    }
     if (!ansShow.innerHTML) {
         opQuery.innerHTML = ''
         ansShow.innerHTML = ''
         return
     }
-    if (prevOp.toString().endsWith('+') || prevOp.toString().endsWith('-') || prevOp.toString().endsWith('/') || prevOp.toString().endsWith('x') || prevOp.toString().endsWith('*')) {
+    prevOp = opQuery.innerHTML = ansShow.innerHTML;
+    if (prevOp.toString().includes('/0')) {
+        ansShow.innerHTML = "Can't Divide by 0";
+        return
+    }
+
+    if (prevOp.toString().endsWith('+') || prevOp.toString().endsWith('-') || prevOp.toString().endsWith('/') || prevOp.toString().endsWith('x') || prevOp.toString().endsWith('*') || prevOp.toString().includes('-*') || prevOp.toString().includes('-/') || prevOp.toString().includes('+*') || prevOp.toString().includes('+/')) {
         ansShow.innerHTML = "Math Error"
         return
     }
@@ -71,6 +79,7 @@ clearBtn.addEventListener('dblclick', () => {
     ansShow.innerHTML = ''
     decimal.addEventListener('click', addAndpreventDecimal)
     history = []
+    n = 0
 })
 function backspaceText() {
     console.log(ansShow.innerHTML)
@@ -87,13 +96,15 @@ function showPrevOperation() {
         return
     }
     if (n >= history.length - 1) {
-        opQuery.innerHTML = history[history.length - 1]
-        ansShow.innerHTML = eval(opQuery.innerHTML)
+        // opQuery.innerHTML = history[history.length - 1]
+        ansShow.innerHTML = history[history.length - 1]
+        // eval(opQuery.innerHTML)
         return
     }
 
-    opQuery.innerHTML = history[n]
-    ansShow.innerHTML = eval(opQuery.innerHTML)
+    // opQuery.innerHTML = history[n + 1]
+    ansShow.innerHTML = history[n + 1]
+    // eval(opQuery.innerHTML)
     n = n + 1;
 }
 
@@ -105,11 +116,13 @@ function showNextOperation() {
         return
     }
     if (n <= 0) {
-        opQuery.innerHTML = history[0]
-        ansShow.innerHTML = eval(opQuery.innerHTML)
+        // opQuery.innerHTML = history[0]
+        ansShow.innerHTML = history[0]
+        // eval(opQuery.innerHTML)
         return
     }
-    opQuery.innerHTML = history[n]
-    ansShow.innerHTML = eval(opQuery.innerHTML)
+    // opQuery.innerHTML = history[n]
+    ansShow.innerHTML = history[n]
+    // eval(opQuery.innerHTML)
     n = n - 1;
 }
